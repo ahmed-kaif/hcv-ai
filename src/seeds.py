@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from src import models, database, utils
 from src.core.config import Config
 
-# Use your database SessionLocal
 db: Session = database.SessionLocal()
 
 # Create admin user
@@ -23,24 +22,25 @@ def create_admin():
         db.add(admin)
         print("✅ Admin user created.")
     else:
-        print("ℹ️ Admin user already exists.")
+        print("Admin user already exists.")
 
-# 🧬 Seed results
+# Seed results
 def seed_results():
     existing = db.query(models.Result).count()
     if existing == 0:
         results = [
-            models.Result(id=0, name="Negative"),
-            models.Result(id=1, name="Hepatitis"),
-            models.Result(id=2, name="Fibrosis"),
-            models.Result(id=3, name="Cirrhosis"),
+            models.Result(id=0, label="Negative"),
+            models.Result(id=1, label="Hepatitis"),
+            models.Result(id=2, label="Fibrosis"),
+            models.Result(id=3, label="Cirrhosis"),
         ]
         db.add_all(results)
         print("✅ Results seeded.")
     else:
-        print("ℹ️ Results already seeded.")
+        print("Results already seeded.")
 
-# 🚀 Run seeding
+
+# Run seeding
 def run():
     create_admin()
     seed_results()
