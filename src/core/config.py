@@ -16,6 +16,8 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str
+    DEFAULT_ADMIN_EMAIL: str
+    DEFAULT_ADMIN_PASSWORD: str
 
     # Google OAuth
     GOOGLE_CLIENT_ID: str
