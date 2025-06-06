@@ -27,7 +27,7 @@ class Prediction(Base):
     Sex = Column(String, nullable=True)
 
     # Result from classification table (foreign key to results table)
-    result_id = Column(Integer, nullable=True)
+    result_id = Column(Integer, ForeignKey("results.id"), nullable=True)
 
     created_at = Column(DateTime, default=datetime.now(timezone.utc))
 
