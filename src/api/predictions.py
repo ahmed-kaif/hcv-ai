@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from src import models, schemas, database, oauth
+from src.services.prediction_service import prediction_service
 
 router = APIRouter(prefix="/predictions", tags=["Predictions"])
 
 @router.post("/", response_model=schemas.PredictionOut)
-def create_prediction(data: schemas.PredictionCreate,
-                      db: Session = Depends(database.get_db),
-                      current_user: models.User = Depends(oauth.get_current_user)):
-    prediction = models.Prediction(**data.model_dump(), user_id=current_user.id)
-    db.add(prediction)
-    db.commit()
-    db.refresh(prediction)
+async def create_prediction(data: schemas.PredictionCreate,
+                    db: Session = Depends(database.get_db),
+                    current_user: models.User = Depends(oauth.get_current_user)):
+    prediction = await prediction_service.create_prediction_with_result(
+        db=db,
+        prediction_data=data,
+        user_id=current_user.id
+    )
     return prediction
 
 @router.get("/", response_model=list[schemas.PredictionOut])

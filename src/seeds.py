@@ -29,6 +29,16 @@ def seed_results():
     existing = db.query(models.Result).count()
     if existing == 0:
         results = [
+            models.Result(id=0, label="Blood Donor"),
+            models.Result(id=1, label="Suspect Blood Donor"),
+            models.Result(id=2, label="Hepatitis"),
+            models.Result(id=3, label="Fibrosis"),
+            models.Result(id=4, label="Cirrhosis"),
+        ]
+        db.add_all(results)
+        db.commit()
+        print("✅ Results seeded.")
+        results = [
             models.Result(id=0, label="Negative"),
             models.Result(id=1, label="Hepatitis"),
             models.Result(id=2, label="Fibrosis"),
