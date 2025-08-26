@@ -33,5 +33,6 @@ class UserOut(BaseModel):
     name: str
     email: EmailStr
     auth_provider: str
+    is_admin: bool
 
     model_config = ConfigDict(from_attributes=True)
