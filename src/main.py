@@ -30,9 +30,7 @@ app.include_router(auth_router)
 app.include_router(prediction_router)
 
 origins = [
-    "http://localhost:3000",   # React/Next.js local dev
-    "http://127.0.0.1:3000",
-    "https://your-frontend-domain.com"  # Production frontend
+    "*"
 ]
 
 app.add_middleware(
