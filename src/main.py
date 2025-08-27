@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from src.database import Base, engine, SessionLocal
 from contextlib import asynccontextmanager
 from src.api.users import router as user_router
@@ -27,6 +28,20 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(prediction_router)
+
+origins = [
+    "http://localhost:3000",   # React/Next.js local dev
+    "http://127.0.0.1:3000",
+    "https://your-frontend-domain.com"  # Production frontend
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def read_root():
