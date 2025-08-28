@@ -76,7 +76,7 @@ services:
       - "8000"
     environment:
       - SECRET_KEY=\${SECRET_KEY}
-      - DATABASE_URL=sqlite:///hcvai.db
+      - DATABASE_URL=sqlite:////app/data/hcvai.db
       - ALGORITHM=HS256
       - ACCESS_TOKEN_EXPIRE_MINUTES=30
       - DEFAULT_ADMIN_EMAIL=\${DEFAULT_ADMIN_EMAIL}
@@ -84,6 +84,8 @@ services:
       - GOOGLE_CLIENT_ID=\${GOOGLE_CLIENT_ID}
       - GOOGLE_CLIENT_SECRET=\${GOOGLE_CLIENT_SECRET}
       - GOOGLE_REDIRECT_URI=\${GOOGLE_REDIRECT_URI}
+    volumes:
+      - ./data:/app/data
     restart: unless-stopped
 
   frontend:
@@ -112,3 +114,4 @@ echo "Setup complete! Next steps:"
 echo "1. Set your SECRET_KEY in an .env file in $PROJECT_DIR"
 echo "2. Run 'docker compose up -d --build' inside $PROJECT_DIR"
 echo "3. Run 'docker logs -f hcv-nginx | hcv-frontend | hcv-backend' to monitor the services"
+echo "4. Run 'docker compose down -v' to stop the services"

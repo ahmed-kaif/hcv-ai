@@ -24,7 +24,13 @@ async def lifespan(app: FastAPI):
     # Yield control to the app
     yield
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lifespan,
+            title="HCV AI Backend",
+            version="1.0.0",
+            description="API for HCV AI application",
+            docs_url="/docs",
+            redoc_url="/redoc",
+            openapi_url="/openapi.json")
 app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(prediction_router)
