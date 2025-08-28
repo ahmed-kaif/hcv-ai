@@ -31,7 +31,6 @@ app.include_router(prediction_router)
 
 origins = [
     "*",
-    "https://hcv-ai.onrender.com/"
 ]
 
 app.add_middleware(
