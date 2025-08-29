@@ -6,6 +6,7 @@ from src.api.users import router as user_router
 from src.api.auth import router as auth_router
 from src.api.predictions import router as prediction_router
 from src import seeds
+from src.core.config import Config
 
 
 @asynccontextmanager
@@ -25,7 +26,7 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(lifespan=lifespan,
-            title="HCV AI Backend",
+            title=Config.PROJECT_NAME,
             version="1.0.0",
             description="API for HCV AI application",
             docs_url="/docs",
@@ -36,16 +37,13 @@ app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(prediction_router)
 
-origins = [
-    "*",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=Config.ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_origin_regex=r"^/api/.*$"
 )
 
 @app.get("/")

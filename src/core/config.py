@@ -25,7 +25,8 @@ class Settings(BaseSettings):
     # Google OAuth
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
-    GOOGLE_REDIRECT_URI: Optional[str] = "http://localhost:8000/auth/callback"
+    GOOGLE_REDIRECT_URI: Optional[str] = ""
+    ALLOWED_ORIGINS: list = ["*"]
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 
