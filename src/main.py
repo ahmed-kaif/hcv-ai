@@ -30,7 +30,8 @@ app = FastAPI(lifespan=lifespan,
             description="API for HCV AI application",
             docs_url="/docs",
             redoc_url="/redoc",
-            openapi_url="/openapi.json")
+            openapi_url="/openapi.json",
+            root_path="/api")
 app.include_router(user_router)
 app.include_router(auth_router)
 app.include_router(prediction_router)
