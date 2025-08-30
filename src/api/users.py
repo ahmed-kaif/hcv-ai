@@ -18,6 +18,19 @@ def get_user(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
     return db.query(models.User).get(user_id)
 
+@router.delete("/{user_id}")
+def delete_user(
+        user_id: int,
+        db: Session = Depends(database.get_db),
+        current_user: models.User = Depends(oauth.get_current_user)
+):
+    user = db.query(models.User).get(user_id)
+    if not user or not current_user.is_admin:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+    db.delete(user)
+    db.commit()
+    return {"message": "User deleted"}
+
 @router.get("/", response_model=list[schemas.UserOut])
 def list_users(
     db: Session = Depends(database.get_db),
